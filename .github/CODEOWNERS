@@ -1,0 +1,35 @@
+# Code Owners
+
+# This file defines code ownership for the menu repository
+# Each line is a file pattern followed by one or more owners
+
+# Default owners for everything in the repo
+* @donggiangthai
+
+# Next.js configuration
+/next.config.js @localstore-platform/menu-maintainers
+/app/ @localstore-platform/menu-maintainers
+
+# Component library
+/components/ @localstore-platform/menu-maintainers
+
+# Public assets
+/public/ @localstore-platform/menu-maintainers
+
+# Styles and design tokens
+/styles/ @localstore-platform/menu-maintainers
+/tailwind.config.js @localstore-platform/menu-maintainers
+
+# API integration
+/lib/api/ @localstore-platform/menu-maintainers
+
+# Documentation
+/docs/ @localstore-platform/menu-maintainers
+/README.md @localstore-platform/menu-maintainers
+
+# CI/CD and GitHub configuration
+/.github/ @localstore-platform/menu-maintainers
+
+# Dependencies
+/package.json @localstore-platform/menu-maintainers
+/package-lock.json @localstore-platform/menu-maintainers
