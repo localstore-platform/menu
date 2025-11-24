@@ -15,7 +15,7 @@ This is the **menu** repository for LocalStore Platform - a public-facing Next.j
 
 ## Specification-Driven Development
 
-All development must follow specifications from the [specs repository](https://github.com/localstore-platform/specs/tree/v1.0-specs).
+All development must follow specifications from the [specs repository](https://github.com/localstore-platform/specs/tree/v1.1-specs).
 
 **Before implementing features:**
 
@@ -244,4 +244,4 @@ When implementing features, verify:
 ## Version
 
 Last updated: 2025-11-25
-Spec version: v1.0-specs
+Spec version: v1.1-specs

@@ -86,14 +86,14 @@ menu/
 
 ## Specifications
 
-This repository follows a specification-driven development approach. All features and implementations must align with the specifications in the [specs repository](https://github.com/localstore-platform/specs/tree/v1.0-specs).
+This repository follows a specification-driven development approach. All features and implementations must align with the specifications in the [specs repository](https://github.com/localstore-platform/specs/tree/v1.1-specs).
 
 **Important Specifications**:
 
-- [API Specification](https://github.com/localstore-platform/specs/blob/v1.0-specs/architecture/api-specification.md) - Menu public endpoints
-- [Database Schema](https://github.com/localstore-platform/specs/blob/v1.0-specs/architecture/database-schema.md) - Menu items and categories
-- [Wireframes & UX Flow](https://github.com/localstore-platform/specs/blob/v1.0-specs/design/wireframes-ux-flow.md) - Customer menu views
-- [Vietnam Market Strategy](https://github.com/localstore-platform/specs/blob/v1.0-specs/research/vietnam-market-strategy.md) - Localization requirements
+- [API Specification](https://github.com/localstore-platform/specs/blob/v1.1-specs/architecture/api-specification.md) - Menu public endpoints
+- [Database Schema](https://github.com/localstore-platform/specs/blob/v1.1-specs/architecture/database-schema.md) - Menu items and categories
+- [Wireframes & UX Flow](https://github.com/localstore-platform/specs/blob/v1.1-specs/design/wireframes-ux-flow.md) - Customer menu views
+- [Vietnam Market Strategy](https://github.com/localstore-platform/specs/blob/v1.1-specs/research/vietnam-market-strategy.md) - Localization requirements
 
 See [`docs/SPEC_LINKS.md`](docs/SPEC_LINKS.md) for a complete list of relevant specifications.
 
@@ -168,9 +168,9 @@ This project is licensed under AGPL-3.0 to ensure that all modifications and net
 For questions, issues, or contributions:
 
 - 📋 [Open an issue](https://github.com/localstore-platform/menu/issues)
-- 📖 [Read the specs](https://github.com/localstore-platform/specs/tree/v1.0-specs)
+- 📖 [Read the specs](https://github.com/localstore-platform/specs/tree/v1.1-specs)
 - 💬 Contact the maintainers via GitHub
 
 ---
 
-**Version**: v1.0-specs | **Last Updated**: 2025-11-25
+**Version**: v1.1-specs | **Last Updated**: 2025-11-25

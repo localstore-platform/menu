@@ -1,31 +1,31 @@
 # Specification Links
 
-This document provides curated links to relevant specifications from the [LocalStore Platform Specs Repository](https://github.com/localstore-platform/specs/tree/v1.0-specs).
+This document provides curated links to relevant specifications from the [LocalStore Platform Specs Repository](https://github.com/localstore-platform/specs/tree/v1.1-specs).
 
 ## Core Specifications
 
 ### Architecture
 
-- [API Specification](https://github.com/localstore-platform/specs/blob/v1.0-specs/architecture/api-specification.md)
+- [API Specification](https://github.com/localstore-platform/specs/blob/v1.1-specs/architecture/api-specification.md)
   - Menu public endpoints (lines 400-600)
   - QR code session endpoints (lines 900-1000)
 
-- [Database Schema](https://github.com/localstore-platform/specs/blob/v1.0-specs/architecture/database-schema.md)
+- [Database Schema](https://github.com/localstore-platform/specs/blob/v1.1-specs/architecture/database-schema.md)
   - Menu items schema (lines 250-350)
   - Categories schema (lines 200-250)
 
 ### Design
 
-- [Wireframes & UX Flow](https://github.com/localstore-platform/specs/blob/v1.0-specs/design/wireframes-ux-flow.md)
+- [Wireframes & UX Flow](https://github.com/localstore-platform/specs/blob/v1.1-specs/design/wireframes-ux-flow.md)
   - Customer menu views (lines 200-400)
   - Mobile-first design (lines 100-200)
 
-- [Flowchart](https://github.com/localstore-platform/specs/blob/v1.0-specs/design/flowchart.md)
+- [Flowchart](https://github.com/localstore-platform/specs/blob/v1.1-specs/design/flowchart.md)
   - Customer ordering flow (lines 100-300)
 
 ### Market Context
 
-- [Vietnam Market Strategy](https://github.com/localstore-platform/specs/blob/v1.0-specs/research/vietnam-market-strategy.md)
+- [Vietnam Market Strategy](https://github.com/localstore-platform/specs/blob/v1.1-specs/research/vietnam-market-strategy.md)
   - Mobile optimization requirements
   - 4G performance targets (<2s TTI)
   - Currency formatting (75.000₫)
@@ -80,6 +80,6 @@ Refer to API Specification for detailed documentation:
 
 ## Version
 
-This document references specifications from tag: **v1.0-specs**
+This document references specifications from tag: **v1.1-specs**
 
 Last updated: 2025-11-25

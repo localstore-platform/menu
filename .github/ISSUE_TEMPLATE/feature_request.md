@@ -22,7 +22,7 @@ assignees: ''
 
 <!-- Link to relevant sections in the specs repository -->
 
-- Specs reference: [Link to specs](https://github.com/localstore-platform/specs/tree/v1.0-specs)
+- Specs reference: [Link to specs](https://github.com/localstore-platform/specs/tree/v1.1-specs)
 - Related spec sections:
 
 ## Use Case
