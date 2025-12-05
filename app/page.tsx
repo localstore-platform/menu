@@ -1,6 +1,6 @@
 export default function HomePage() {
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gradient-to-b from-primary-50 to-white p-4">
+    <main className="min-h-screen flex items-center justify-center bg-linear-to-b from-primary-50 to-white p-4">
       <div className="max-w-md text-center">
         <h1 className="text-4xl font-bold text-primary-700 mb-4">
           🌐 LocalStore Menu
