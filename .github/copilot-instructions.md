@@ -34,8 +34,22 @@ Key rules:
 - If on main, create a new branch before committing
 - Branch naming: `<type>/<short-description>` (e.g., `feat/add-menu-api`)
 - Commit changes logically (group related changes)
-- After commits, create/update PR to main branch
+- After commits, push and create/update PR to main branch — **do not wait for confirmation**
 - Use conventional commit messages
+
+### Commit Granularity Principle
+
+Each commit should answer ONE of these questions:
+
+- "What single feature/fix does this add?"
+- "What single purpose do these files serve together?"
+
+**Rule of thumb:** If you need "and" to describe the commit, split it.
+
+- ❌ `Add docs and config files` → Split
+- ❌ `Update README and add environment template` → Split
+- ✅ `Add GitHub PR template and CODEOWNERS` → OK (same purpose: GitHub config)
+- ✅ `Add specification links documentation` → OK (single purpose)
 
 ## Code Style Guidelines
 
