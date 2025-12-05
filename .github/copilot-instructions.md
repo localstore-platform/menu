@@ -1,274 +1,189 @@
-# GitHub Copilot Instructions for Menu Repository
+# GitHub Copilot Instructions – Menu Repository
+
+This extends the global instructions from the [specs repository](https://github.com/localstore-platform/specs/blob/v1.1-specs/.github/copilot-instructions.md).
 
 ## Repository Context
 
-This is the **menu** repository for LocalStore Platform - a public-facing Next.js 14 application that displays restaurant menus for Vietnamese small businesses.
+- **Repository:** menu
+- **Purpose:** Next.js public-facing menu website for customers to view restaurant menus
+- **Tech Stack:** Next.js 16, React 18, TypeScript, Tailwind CSS 3.4, Static Export
+- **Deployment:** Vercel with static export
+- **Spec Version:** v1.1-specs
 
-**Key Information:**
+---
 
-- **Type**: Next.js 14 Static Site Generation (App Router)
-- **Target Market**: Vietnamese small businesses (restaurants, street food vendors)
-- **Primary Locale**: `vi-VN`
-- **Currency**: VND (Vietnamese Dong)
-- **Deployment**: Vercel (static export)
-- **Domain Pattern**: `{tenant}.lsp.menu`
+## 🚀 "Continue Work" Trigger
 
-## Specification-Driven Development
+When the user says **"continue work"**, **"tiếp tục"**, or **"next task"**:
 
-All development must follow specifications from the [specs repository](https://github.com/localstore-platform/specs/tree/v1.1-specs).
+### Step 1: Read Local Progress
 
-**Before implementing features:**
+Read `docs/CURRENT_WORK.md` in this repository to understand:
 
-1. Check `docs/SPEC_LINKS.md` for relevant specifications
-2. Review the linked spec sections
-3. Ensure implementation matches spec requirements
-4. Use spec terminology and patterns
+- Current sprint and focus
+- Which stories are assigned to this repo
+- Current status of each story (🔴 Not Started / 🟡 In Progress / ✅ Done)
+- Any blockers or notes from previous session
 
-## Git Workflow
+### Step 2: Identify Next Task
 
-**IMPORTANT**: Follow the git workflow defined in [docs/GIT_WORKFLOW.md](../docs/GIT_WORKFLOW.md).
+From CURRENT_WORK.md:
 
-Key rules:
+1. If any story is 🟡 In Progress → continue that story
+2. Otherwise, pick the first 🔴 Not Started story
+3. If all stories are ✅ Done → report completion and suggest next sprint
 
-- **Never commit directly to main branch**
-- If on main, create a new branch before committing
-- Branch naming: `<type>/<short-description>` (e.g., `feat/add-menu-api`)
-- Commit changes logically (group related changes)
-- After commits, push and create/update PR to main branch — **do not wait for confirmation**
-- Use conventional commit messages
+### Step 3: Load Specifications
 
-### Commit Granularity Principle
+1. Check the "Spec References" section in CURRENT_WORK.md for the spec link
+2. Fetch and read the relevant specification section
+3. Also check `docs/SPEC_LINKS.md` for additional context if needed
 
-Each commit should answer ONE of these questions:
+### Step 4: Implement
 
-- "What single feature/fix does this add?"
-- "What single purpose do these files serve together?"
+1. Follow the spec exactly
+2. Apply code standards from this file (see below)
+3. Mobile-first, Vietnamese locale (vi-VN), VND formatting
 
-**Rule of thumb:** If you need "and" to describe the commit, split it.
+### Step 5: Update Progress
 
-- ❌ `Add docs and config files` → Split
-- ❌ `Update README and add environment template` → Split
-- ✅ `Add GitHub PR template and CODEOWNERS` → OK (same purpose: GitHub config)
-- ✅ `Add specification links documentation` → OK (single purpose)
+After implementation, **update `docs/CURRENT_WORK.md`**:
 
-## Code Style Guidelines
+- Change story status from 🔴 to 🟡 (in progress) or ✅ (done)
+- Add notes about what was implemented
+- Add any blockers or follow-up items
+- Update "Last Updated" timestamp
 
-### TypeScript
+### Step 6: Git Workflow
 
-- Use TypeScript strict mode
-- Prefer interfaces over types for object shapes
-- Use explicit return types for functions
-- Avoid `any` - use `unknown` if type is truly unknown
+1. Create/use feature branch: `feat/<story-description>`
+2. Commit with conventional message
+3. Run `npm run lint && npm run test`
+4. Create PR when story is complete
 
-### React Components
+### Step 7: Report
 
-- Use functional components with hooks
-- Prefer Server Components (default in App Router)
-- Use Client Components only when needed (`'use client'`)
-- Keep components small and focused (< 150 lines)
-- Use composition over prop drilling
+Tell the user:
 
-### File Organization
+- What story you worked on
+- What was implemented
+- Current status
+- What's next
 
+---
+
+## Key Spec Files
+
+| Spec File | Sections | Purpose |
+|-----------|----------|---------|
+| `design/wireframes-ux-flow.md` | Lines 200-400 | Customer menu views |
+| `architecture/api-specification.md` | Lines 400-600 | Menu public endpoints |
+| `research/vietnam-market-strategy.md` | Mobile section | 4G optimization, <2s TTI |
+| `planning/sprint-0.5-menu-demo.md` | Stories 1.1, 1.2, 3.1, 4.1-4.2 | Current sprint tasks |
+
+Also check `docs/SPEC_LINKS.md` for curated links with line numbers.
+
+---
+
+## Build & Test Commands
+
+```bash
+npm install          # Install dependencies
+npm run dev          # Start development server (localhost:3000)
+npm run test         # Run tests
+npm run lint         # Lint code
+npm run build        # Build for production (static export)
+npm run start        # Preview production build
+vercel --prod        # Deploy to Vercel
 ```
+
+---
+
+## Project Structure
+
+```text
 app/
-  [tenant]/           # Tenant-specific routes
-    page.tsx          # Server Component
-    layout.tsx        # Shared layout
-  components/         # Shared components
-  lib/
-    api/              # API client functions
-    utils/            # Utility functions
-    types/            # TypeScript types
+├── [tenant]/
+│   └── menu/
+│       └── page.tsx      # Dynamic menu page
+├── layout.tsx            # Root layout with vi-VN locale
+└── page.tsx              # Landing/redirect
+
+components/
+├── menu/
+│   ├── MenuItem.tsx      # Menu item card
+│   ├── CategoryNav.tsx   # Category tabs/sections
+│   └── MenuSkeleton.tsx  # Loading state
+└── ui/                   # Shared UI components
+
+lib/
+├── api/
+│   └── menu-client.ts    # API client
+└── utils/
+    └── currency.ts       # formatVND()
 ```
 
-### Naming Conventions
+---
 
-- Components: PascalCase (`MenuCard.tsx`)
-- Files: kebab-case (`format-currency.ts`)
-- Functions: camelCase (`formatCurrency`)
-- Constants: UPPER_SNAKE_CASE (`API_BASE_URL`)
+## Code Standards
 
-## Vietnamese Localization
+### Next.js Patterns
 
-### Currency Formatting
-
-Always use Vietnamese number formatting:
-
-```typescript
-// Correct
-const formatted = new Intl.NumberFormat('vi-VN', {
-  style: 'currency',
-  currency: 'VND',
-  minimumFractionDigits: 0,
-}).format(price);
-// Output: 75.000₫
-
-// Never use
-const wrong = `${price.toFixed(2)} VND`;
-```
-
-### Date and Time
-
-- Date format: `DD/MM/YYYY`
-- Time format: 24-hour (`HH:mm`)
-- Use `vi-VN` locale with Intl.DateTimeFormat
-
-### Text Content
-
-- All user-facing text should be in Vietnamese
-- Use proper Vietnamese diacritics
-- Consider cultural context (street food terms, meal times)
-
-## Performance Requirements
-
-### Critical Metrics
-
-- **Time to Interactive**: < 2s on 4G
-- **First Contentful Paint**: < 1.5s
-- **Lighthouse Performance**: > 90
-- **Bundle Size**: < 200KB gzipped
-
-### Optimization Strategies
-
-- Use Next.js Image component for all images
-- Implement code splitting for heavy components
-- Lazy load below-the-fold content
-- Use static generation whenever possible
-- Minimize client-side JavaScript
-
-### Mobile-First
-
-- Test on 360x640px viewport minimum
-- Touch targets: 44x44px minimum
-- Font size: 16px minimum for body text
-- Optimize for slow 4G connections
-
-## API Integration
-
-### Base URL
-
-Use environment variable for API base URL:
-
-```typescript
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-```
-
-### Public Endpoints
-
-All API calls use public endpoints (no authentication):
-
-- `GET /api/v1/public/menu/:tenant_slug`
-- `GET /api/v1/public/menu/:tenant_slug/categories`
-- `GET /api/v1/public/menu/:tenant_slug/items/:item_id`
-
-### Error Handling
-
-- Always handle network errors gracefully
-- Show user-friendly Vietnamese error messages
-- Implement fallbacks for missing images/data
-- Log errors for debugging (development only)
-
-## Styling Guidelines
+- Use App Router (`app/` directory)
+- Server Components by default, Client Components only when needed
+- Dynamic routes for tenant: `app/[tenant]/menu/page.tsx`
+- Static export for Vercel deployment
 
 ### Tailwind CSS
 
-- Use Tailwind utility classes
-- Define custom design tokens in `tailwind.config.js`
-- Use Vietnamese design tokens (colors, fonts)
-- Mobile-first responsive design
+- Use design tokens from `tailwind.config.js`
+- Mobile-first: start with mobile styles, add `md:` for larger screens
+- Vietnamese-friendly: ensure proper text wrapping for Vietnamese characters
 
-### Design Tokens
+### Performance
 
-```javascript
-// Vietnamese-specific design tokens
-colors: {
-  primary: '#FF6B35',      // Warm orange
-  secondary: '#004E89',    // Deep blue
-  accent: '#F7931E',       // Golden yellow
-}
-```
+- Target <2s TTI on 4G networks
+- Lazy load images with `next/image`
+- Minimize client-side JavaScript
+- Use static generation where possible
 
-### Accessibility
+### Vietnamese Localization
 
-- Semantic HTML elements
-- Proper heading hierarchy
-- Alt text for images (in Vietnamese)
-- Keyboard navigation support
+- Default locale: vi-VN
+- Currency: VND with format 75.000₫ (use `formatVND()` utility)
+- All customer-facing text in Vietnamese
 
-## Testing Considerations
+---
 
-When implementing features, consider:
+## Git Workflow
 
-- **Device Testing**: Test on entry-level Android devices (2020+)
-- **Network Testing**: Test on slow 4G (throttled)
-- **Browser Testing**: Chrome, Safari, Firefox
-- **Tenant Testing**: Test with different tenant data
+**CRITICAL:** Follow `docs/GIT_WORKFLOW.md`:
 
-## Common Patterns
+- Never commit directly to main branch
+- Branch naming: `feat/<story-description>` (e.g., `feat/menu-display-page`)
+- Use conventional commit messages
+- Create PR after commits
 
-### Fetching Menu Data
+---
 
-```typescript
-async function getMenu(tenantSlug: string) {
-  const response = await fetch(
-    `${API_BASE_URL}/api/v1/public/menu/${tenantSlug}`,
-    { next: { revalidate: 300 } } // 5 minute cache
-  );
-  
-  if (!response.ok) {
-    throw new Error('Failed to fetch menu');
-  }
-  
-  return response.json();
-}
-```
+## Testing Requirements
 
-### Currency Display
+- Component tests with React Testing Library
+- Test mobile viewports (375px, 414px)
+- Test Vietnamese text rendering
 
-```typescript
-function formatVND(amount: number): string {
-  return new Intl.NumberFormat('vi-VN', {
-    style: 'currency',
-    currency: 'VND',
-    minimumFractionDigits: 0,
-  }).format(amount);
-}
-```
+---
 
-### Image Optimization
+## Dependencies
 
-```typescript
-import Image from 'next/image';
+- **Requires:** `api` repo for menu data endpoints
+- **Requires:** `contracts` repo for shared TypeScript types (@localstore/contracts)
+- **Deployment:** Independent to Vercel
 
-<Image
-  src={item.image_url}
-  alt={item.name}
-  width={300}
-  height={200}
-  className="rounded-lg"
-  loading="lazy"
-/>
-```
+---
 
-## Related Repositories
+## Related Documentation
 
-- **specs**: Central specifications and documentation
-- **api**: Go backend service
-- **admin**: Admin dashboard for managing menus
-
-## Questions to Ask
-
-When implementing features, verify:
-
-1. Does this match the specifications?
-2. Is this optimized for mobile 4G performance?
-3. Is the Vietnamese localization correct?
-4. Are we using Server Components where possible?
-5. Will this work for different tenants?
-6. Is the bundle size impact acceptable?
-
-## Version
-
-Last updated: 2025-11-25
-Spec version: v1.1-specs
+- [Wireframes & UX Flow](https://github.com/localstore-platform/specs/blob/v1.1-specs/design/wireframes-ux-flow.md)
+- [API Specification](https://github.com/localstore-platform/specs/blob/v1.1-specs/architecture/api-specification.md)
+- [Vietnam Market Strategy](https://github.com/localstore-platform/specs/blob/v1.1-specs/research/vietnam-market-strategy.md)
