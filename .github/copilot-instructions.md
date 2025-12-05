@@ -24,6 +24,19 @@ All development must follow specifications from the [specs repository](https://g
 3. Ensure implementation matches spec requirements
 4. Use spec terminology and patterns
 
+## Git Workflow
+
+**IMPORTANT**: Follow the git workflow defined in [docs/GIT_WORKFLOW.md](../docs/GIT_WORKFLOW.md).
+
+Key rules:
+
+- **Never commit directly to main branch**
+- If on main, create a new branch before committing
+- Branch naming: `<type>/<short-description>` (e.g., `feat/add-menu-api`)
+- Commit changes logically (group related changes)
+- After commits, create/update PR to main branch
+- Use conventional commit messages
+
 ## Code Style Guidelines
 
 ### TypeScript
