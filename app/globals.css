@@ -1,6 +1,55 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+/* Vietnamese-inspired color palette */
+@theme {
+  /* Primary - Warm Orange */
+  --color-primary-50: #FFF5F2;
+  --color-primary-100: #FFE8E0;
+  --color-primary-200: #FFD1C2;
+  --color-primary-300: #FFB19A;
+  --color-primary-400: #FF8B66;
+  --color-primary-500: #FF6B35;
+  --color-primary-600: #E64D1A;
+  --color-primary-700: #C23A0F;
+  --color-primary-800: #992E0C;
+  --color-primary-900: #70220A;
+  --color-primary: #FF6B35;
+
+  /* Secondary - Deep Blue */
+  --color-secondary-50: #E6F2FF;
+  --color-secondary-100: #CCE5FF;
+  --color-secondary-200: #99CBFF;
+  --color-secondary-300: #66B0FF;
+  --color-secondary-400: #3396FF;
+  --color-secondary-500: #007BFF;
+  --color-secondary-600: #0062CC;
+  --color-secondary-700: #004E89;
+  --color-secondary-800: #003B66;
+  --color-secondary-900: #002844;
+  --color-secondary: #004E89;
+
+  /* Accent - Golden Yellow */
+  --color-accent-50: #FFF8ED;
+  --color-accent-100: #FFEFD6;
+  --color-accent-200: #FFE0AD;
+  --color-accent-300: #FFCF7F;
+  --color-accent-400: #FFBD4D;
+  --color-accent-500: #F7931E;
+  --color-accent-600: #D97706;
+  --color-accent-700: #B45309;
+  --color-accent-800: #92400E;
+  --color-accent-900: #78350F;
+  --color-accent: #F7931E;
+
+  /* Font family */
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Touch-friendly spacing */
+  --spacing-touch: 44px;
+
+  /* Mobile-optimized max width */
+  --container-menu: 480px;
+}
 
 :root {
   --primary: #ff6b35;
@@ -9,7 +58,7 @@
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
