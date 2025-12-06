@@ -29,7 +29,7 @@ export async function generateMetadata({
   let storeName = 'Thực đơn';
   try {
     const menuData = await fetchMenu(tenant);
-    storeName = menuData.store.businessName;
+    storeName = menuData.store.name;
   } catch {
     // Fallback to generic title if API fails
   }

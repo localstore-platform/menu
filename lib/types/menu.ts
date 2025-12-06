@@ -1,115 +1,76 @@
 /**
  * Menu Types
- * Based on API response from localstore-platform/api
+ * Re-exports from @localstore/contracts with UI-friendly adapters
  *
- * These types mirror the API response structure.
- * TODO: Move to @localstore/contracts when available
+ * The API returns snake_case format from contracts.
+ * Components use camelCase for React conventions.
+ */
+
+// Re-export contract types (snake_case - for API layer)
+export type {
+  PublicMenuResponse as PublicMenuResponseDto,
+  MenuCategoryDto,
+  MenuItemDto,
+  MenuStoreInfoDto,
+  ApiError,
+} from '@localstore/contracts';
+
+/**
+ * UI-friendly types (camelCase - for components)
+ * These are transformed from API DTOs for React component consumption
  */
 
 /**
- * Store information from the public menu response
+ * Store information for UI display
  */
-export interface PublicMenuStoreInfo {
-  id: string;
-  businessName: string;
-  businessType?: string;
-  address?: string;
-  phone?: string;
-  locale: string;
-  currency: string;
-}
-
-/**
- * Menu item variant (size options, etc.)
- */
-export interface MenuItemVariant {
-  id: string;
-  name: string;
-  nameEn?: string;
-  priceAdjustment: number;
-  isAvailable: boolean;
-}
-
-/**
- * Menu item add-on (extra toppings, etc.)
- */
-export interface MenuItemAddOn {
+export interface MenuStore {
   id: string;
   name: string;
-  nameEn?: string;
-  price: number;
-  isRequired: boolean;
-  maxSelections: number;
-  isAvailable: boolean;
+  slug: string;
+  logoUrl?: string | null;
+  primaryColor?: string | null;
+  businessType?: string | null;
 }
 
 /**
- * Menu item image
- */
-export interface MenuItemImage {
-  id: string;
-  url: string;
-  thumbnailUrl?: string;
-  altText?: string;
-  isPrimary: boolean;
-}
-
-/**
- * Individual menu item
+ * Menu item for UI display
  */
 export interface MenuItem {
   id: string;
   name: string;
-  nameEn?: string;
-  description?: string;
-  descriptionEn?: string;
+  nameEn?: string | null;
+  description?: string | null;
   price: number;
-  currency: string;
-  isFeatured: boolean;
-  isSpicy: boolean;
-  isVegetarian: boolean;
-  isVegan: boolean;
-  isAvailable: boolean;
-  thumbnailUrl?: string;
-  variants: MenuItemVariant[];
-  addOns: MenuItemAddOn[];
-  images: MenuItemImage[];
+  compareAtPrice?: number | null;
+  currencyCode: string;
+  imageUrl?: string | null;
+  available: boolean;
+  isFeatured?: boolean;
+  isSpicy?: boolean;
+  isVegetarian?: boolean;
+  isVegan?: boolean;
+  displayOrder: number;
 }
 
 /**
- * Menu category with items
+ * Menu category with items for UI display
  */
 export interface MenuCategory {
   id: string;
   name: string;
-  nameEn?: string;
-  description?: string;
+  nameEn?: string | null;
+  description?: string | null;
   displayOrder: number;
   items: MenuItem[];
 }
 
 /**
- * Response metadata
+ * Complete menu data for UI consumption
  */
-export interface MenuMeta {
-  timestamp: string;
-  tenantId: string;
-}
-
-/**
- * Complete public menu response
- */
-export interface PublicMenuResponse {
-  store: PublicMenuStoreInfo;
+export interface MenuData {
+  store: MenuStore;
   categories: MenuCategory[];
-  meta: MenuMeta;
-}
-
-/**
- * API error response
- */
-export interface ApiError {
-  code: string;
-  message: string;
-  details?: Record<string, unknown>;
+  totalItems: number;
+  currencyCode: string;
+  lastUpdatedAt: string;
 }

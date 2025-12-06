@@ -11,10 +11,11 @@
 | Story | Description | Status | Notes |
 |-------|-------------|--------|-------|
 | 1.1 | Menu Display Page | ✅ Done | Mobile-first, category navigation |
-| 1.2 | VND Currency Formatter | ✅ Done | 13 unit tests passing |
-| 3.1 | API Integration | ✅ Done | Connected to localhost:8080 |
+| 1.2 | VND Currency Formatter | ✅ Done | Now using @localstore/contracts |
+| 3.1 | API Integration | ✅ Done | Updated to use contracts DTOs |
 | 4.1 | Mobile Optimization | ✅ Done | PWA support, 320px screens, touch targets |
 | 4.2 | Demo Deployment (Vercel) | ⏸️ Blocked | Waiting for API infra deployment |
+| - | Contracts Integration | ✅ Done | @localstore/contracts@0.2.0 integrated |
 
 **Status Legend:** 🔴 Not Started | 🟡 In Progress | ✅ Done | ⏸️ Blocked
 
@@ -52,7 +53,22 @@
 
 ## Session Notes
 
-### Session: 2025-12-06
+### Session: 2025-12-06 (Contracts Integration)
+
+- Synced events from #agent-events
+- Installed @localstore/contracts@0.2.0
+- Integrated contracts types:
+  - Re-exported DTOs from contracts in lib/types/menu.ts
+  - Created UI-friendly camelCase types (MenuData, MenuItem, MenuCategory, MenuStore)
+  - Added DTO-to-UI transformer functions in menu-client.ts
+  - Updated MenuItem component to use contracts types
+  - Updated MenuContent component to use new MenuData type
+  - Updated currency utilities to re-export from contracts
+  - Updated tests to match contracts format (space before ₫ symbol)
+- All 9 tests passing
+- TypeScript and ESLint checks passing
+
+### Session: 2025-12-06 (Sprint 0.5)
 
 - Started: Stories 1.1, 1.2, 3.1, 4.1
 - Completed:
@@ -80,33 +96,33 @@
 
 ## Implementation Summary
 
-### Files Created
+### Files Created/Updated
 
 ```plaintext
 lib/
 ├── api/
-│   └── menu-client.ts      # API client with retry logic
+│   └── menu-client.ts      # API client with DTO transformers (updated)
 ├── types/
-│   └── menu.ts             # TypeScript types for menu data
+│   └── menu.ts             # Re-exports from @localstore/contracts (updated)
 └── utils/
-    ├── currency.ts         # VND formatter
-    └── currency.test.ts    # Unit tests (13 passing)
+    ├── currency.ts         # Re-exports from contracts (updated)
+    └── currency.test.ts    # Unit tests (9 passing)
 
 components/
 └── menu/
     ├── index.ts            # Re-exports
-    ├── MenuItem.tsx        # Menu item card (mobile-optimized)
-    ├── CategoryNav.tsx     # Sticky category tabs
+    ├── MenuItem.tsx        # Uses contracts types (updated)
+    ├── CategoryNav.tsx     # Uses contracts types (updated)
     ├── MenuSkeleton.tsx    # Loading skeleton
     ├── MenuError.tsx       # Error states
-    └── MenuContent.tsx     # Main menu content (debounced observer)
+    └── MenuContent.tsx     # Uses MenuData type (updated)
 
 app/
 ├── layout.tsx              # PWA metadata, viewport config
 ├── globals.css             # xs breakpoint, safe-area utilities
 └── [tenant]/
     └── menu/
-        └── page.tsx        # Dynamic menu page
+        └── page.tsx        # Uses store.name (updated)
 
 public/
 ├── manifest.json           # PWA manifest
@@ -115,13 +131,32 @@ public/
     └── icon-512.svg        # PWA icon 512x512
 
 eslint.config.mjs           # ESLint 9 flat config
+package.json                # Added @localstore/contracts@0.2.0
 ```
 
-### API Integration
+### Contracts Integration
 
-- **Endpoint:** `GET /api/v1/menu/:tenantId`
-- **Base URL:** `http://localhost:8080` (configurable via NEXT_PUBLIC_API_BASE_URL)
-- **Test Tenant:** `550e8400-e29b-41d4-a716-446655440000` (Phở Hà Nội 24)
+**Package:** `@localstore/contracts@0.2.0`
+
+**Types imported:**
+
+- `PublicMenuResponse` (DTO - snake_case)
+- `MenuCategoryDto` (DTO - snake_case)
+- `MenuItemDto` (DTO - snake_case)
+- `MenuStoreInfoDto` (DTO - snake_case)
+- `ApiError`
+
+**Utilities imported:**
+
+- `formatVND()` - VND currency formatter
+- `formatVNDRange()` - Price range formatter
+- `formatVNDCompact()` - Compact VND formatter
+
+**Architecture:**
+
+- API layer receives snake_case DTOs from contracts
+- Transformer functions convert to camelCase UI types
+- Components use UI-friendly camelCase types
 
 ---
 

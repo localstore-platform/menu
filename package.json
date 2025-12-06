@@ -18,6 +18,7 @@
     "docker:shell": "docker compose -f docker-compose.yml -f docker-compose.dev.yml exec menu sh"
   },
   "dependencies": {
+    "@localstore/contracts": "0.2.0",
     "next": "^16.0.7",
     "react": "^19.2.1",
     "react-dom": "^19.2.1"

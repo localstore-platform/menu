@@ -4,10 +4,11 @@
  * MenuItem Component
  * Story 1.1: Menu Display Page
  *
- * Displays a single menu item with name, description, price, and badges
+ * Displays a single menu item with name, description, price, and badges.
+ * Uses types from @localstore/contracts via lib/types/menu.ts
  */
 
-import { formatVND, formatVNDRange, calculateVariantPrice } from '@/lib/utils/currency';
+import { formatVND } from '@localstore/contracts';
 import type { MenuItem as MenuItemType } from '@/lib/types/menu';
 
 interface MenuItemProps {
@@ -15,37 +16,23 @@ interface MenuItemProps {
 }
 
 export function MenuItem({ item }: MenuItemProps) {
-  // Calculate price range if variants exist
+  // Get price display with optional compare-at price
   const getPriceDisplay = () => {
-    if (item.variants.length === 0) {
-      return formatVND(item.price);
-    }
-
-    const prices = item.variants
-      .filter((v) => v.isAvailable)
-      .map((v) => calculateVariantPrice(item.price, v.priceAdjustment));
-
-    if (prices.length === 0) {
-      return formatVND(item.price);
-    }
-
-    const minPrice = Math.min(...prices);
-    const maxPrice = Math.max(...prices);
-
-    return formatVNDRange(minPrice, maxPrice);
+    const priceStr = formatVND(item.price);
+    return priceStr;
   };
 
   return (
     <article
       className={`flex gap-3 p-3 rounded-lg border border-gray-100 bg-white shadow-sm transition-shadow hover:shadow-md active:scale-[0.99] min-h-[72px] ${
-        !item.isAvailable ? 'opacity-60' : ''
+        !item.available ? 'opacity-60' : ''
       }`}
     >
       {/* Image placeholder or actual image - smaller on 320px screens */}
       <div className="shrink-0 w-16 h-16 xs:w-20 xs:h-20 rounded-lg bg-gray-100 overflow-hidden">
-        {item.thumbnailUrl ? (
+        {item.imageUrl ? (
           <img
-            src={item.thumbnailUrl}
+            src={item.imageUrl}
             alt={item.name}
             className="w-full h-full object-cover"
             loading="lazy"
@@ -97,7 +84,7 @@ export function MenuItem({ item }: MenuItemProps) {
                 🥬
               </span>
             )}
-            {!item.isAvailable && (
+            {!item.available && (
               <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600">
                 Hết
               </span>
@@ -112,40 +99,19 @@ export function MenuItem({ item }: MenuItemProps) {
           </p>
         )}
 
-        {/* Variants preview */}
-        {item.variants.length > 0 && (
-          <div className="mt-1 flex flex-wrap gap-1">
-            {item.variants
-              .filter((v) => v.isAvailable)
-              .slice(0, 3)
-              .map((variant) => (
-                <span
-                  key={variant.id}
-                  className="text-xs text-gray-500 bg-gray-50 px-1.5 py-0.5 rounded"
-                >
-                  {variant.name}
-                </span>
-              ))}
-            {item.variants.filter((v) => v.isAvailable).length > 3 && (
-              <span className="text-xs text-gray-400">
-                +{item.variants.filter((v) => v.isAvailable).length - 3}
+        {/* Price */}
+        <div className="mt-2 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="font-semibold text-primary-600 vnd-price">
+              {getPriceDisplay()}
+            </span>
+            {/* Show original price if discounted */}
+            {item.compareAtPrice && item.compareAtPrice > item.price && (
+              <span className="text-sm text-gray-400 line-through">
+                {formatVND(item.compareAtPrice)}
               </span>
             )}
           </div>
-        )}
-
-        {/* Price */}
-        <div className="mt-2 flex items-center justify-between">
-          <span className="font-semibold text-primary-600 vnd-price">
-            {getPriceDisplay()}
-          </span>
-
-          {/* Add-ons indicator */}
-          {item.addOns.length > 0 && (
-            <span className="text-xs text-gray-500">
-              +{item.addOns.length} tùy chọn
-            </span>
-          )}
         </div>
       </div>
     </article>

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
+import { ServiceWorkerRegistration } from '@/components/ServiceWorkerRegistration';
 
 export const metadata: Metadata = {
   title: 'LocalStore Menu',
@@ -39,6 +40,7 @@ export default function RootLayout({
     <html lang="vi">
       <body className="safe-area-inset-top safe-area-inset-bottom" suppressHydrationWarning>
         {children}
+        <ServiceWorkerRegistration />
       </body>
     </html>
   );

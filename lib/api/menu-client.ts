@@ -2,10 +2,21 @@
  * Menu API Client
  * Story 3.1: API Integration with Menu Website
  *
- * Fetches menu data from the LocalStore API
+ * Fetches menu data from the LocalStore API and transforms
+ * snake_case DTO responses to camelCase for UI components.
  */
 
-import type { PublicMenuResponse, ApiError } from '@/lib/types/menu';
+import type { ApiError } from '@localstore/contracts';
+import type {
+  PublicMenuResponseDto,
+  MenuCategoryDto,
+  MenuItemDto,
+  MenuStoreInfoDto,
+  MenuData,
+  MenuStore,
+  MenuCategory,
+  MenuItem,
+} from '@/lib/types/menu';
 
 /**
  * API base URL from environment variable
@@ -30,12 +41,75 @@ export class MenuApiError extends Error {
 }
 
 /**
+ * Transform store DTO (snake_case) to UI model (camelCase)
+ */
+function transformStore(dto: MenuStoreInfoDto): MenuStore {
+  return {
+    id: dto.id,
+    name: dto.name,
+    slug: dto.slug,
+    logoUrl: dto.logo_url,
+    primaryColor: dto.primary_color,
+    businessType: dto.business_type,
+  };
+}
+
+/**
+ * Transform menu item DTO (snake_case) to UI model (camelCase)
+ */
+function transformMenuItem(dto: MenuItemDto): MenuItem {
+  return {
+    id: dto.id,
+    name: dto.name,
+    nameEn: dto.name_en,
+    description: dto.description,
+    price: dto.price,
+    compareAtPrice: dto.compare_at_price,
+    currencyCode: dto.currency_code,
+    imageUrl: dto.image_url,
+    available: dto.available,
+    isFeatured: dto.is_featured,
+    isSpicy: dto.is_spicy,
+    isVegetarian: dto.is_vegetarian,
+    isVegan: dto.is_vegan,
+    displayOrder: dto.display_order,
+  };
+}
+
+/**
+ * Transform category DTO (snake_case) to UI model (camelCase)
+ */
+function transformCategory(dto: MenuCategoryDto): MenuCategory {
+  return {
+    id: dto.id,
+    name: dto.name,
+    nameEn: dto.name_en,
+    description: dto.description,
+    displayOrder: dto.display_order,
+    items: dto.items.map(transformMenuItem),
+  };
+}
+
+/**
+ * Transform full menu response DTO to UI model
+ */
+function transformMenuResponse(dto: PublicMenuResponseDto): MenuData {
+  return {
+    store: transformStore(dto.store),
+    categories: dto.categories.map(transformCategory),
+    totalItems: dto.total_items,
+    currencyCode: dto.currency_code,
+    lastUpdatedAt: dto.last_updated_at,
+  };
+}
+
+/**
  * Fetches the complete menu for a tenant
  * @param tenantId - UUID of the tenant/restaurant
- * @returns PublicMenuResponse with store info, categories, and items
+ * @returns MenuData with store info, categories, and items (camelCase)
  * @throws MenuApiError if the API returns an error
  */
-export async function fetchMenu(tenantId: string): Promise<PublicMenuResponse> {
+export async function fetchMenu(tenantId: string): Promise<MenuData> {
   const url = `${API_BASE_URL}/api/v1/menu/${tenantId}`;
 
   try {
@@ -57,8 +131,8 @@ export async function fetchMenu(tenantId: string): Promise<PublicMenuResponse> {
       });
     }
 
-    const data: PublicMenuResponse = await response.json();
-    return data;
+    const dto: PublicMenuResponseDto = await response.json();
+    return transformMenuResponse(dto);
   } catch (error) {
     if (error instanceof MenuApiError) {
       throw error;
@@ -76,12 +150,12 @@ export async function fetchMenu(tenantId: string): Promise<PublicMenuResponse> {
  * Fetches menu with retry logic
  * @param tenantId - UUID of the tenant/restaurant
  * @param maxRetries - Maximum number of retry attempts (default: 2)
- * @returns PublicMenuResponse
+ * @returns MenuData (camelCase)
  */
 export async function fetchMenuWithRetry(
   tenantId: string,
   maxRetries: number = 2
-): Promise<PublicMenuResponse> {
+): Promise<MenuData> {
   let lastError: Error | null = null;
 
   for (let attempt = 0; attempt <= maxRetries; attempt++) {

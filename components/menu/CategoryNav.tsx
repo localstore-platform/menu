@@ -4,7 +4,8 @@
  * CategoryNav Component
  * Story 1.1: Menu Display Page
  *
- * Sticky category navigation tabs for quick scrolling to sections
+ * Sticky category navigation tabs for quick scrolling to sections.
+ * Uses types from @localstore/contracts via lib/types/menu.ts
  */
 
 import { useEffect, useState, useRef } from 'react';
