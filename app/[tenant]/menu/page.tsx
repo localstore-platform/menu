@@ -8,6 +8,7 @@
 
 import type { Metadata } from 'next';
 import { MenuContent } from '@/components/menu/MenuContent';
+import { fetchMenu } from '@/lib/api/menu-client';
 
 interface MenuPageProps {
   params: Promise<{
@@ -17,18 +18,28 @@ interface MenuPageProps {
 
 /**
  * Generate metadata for the menu page
+ * Fetches store name from API for dynamic title
  */
 export async function generateMetadata({
   params,
 }: MenuPageProps): Promise<Metadata> {
-  const { tenant: _tenant } = await params;
+  const { tenant } = await params;
+
+  // Try to fetch store name for title
+  let storeName = 'Thực đơn';
+  try {
+    const menuData = await fetchMenu(tenant);
+    storeName = menuData.store.businessName;
+  } catch {
+    // Fallback to generic title if API fails
+  }
 
   return {
-    title: `Menu | LocalStore`,
-    description: 'Xem thực đơn nhà hàng',
+    title: storeName,
+    description: `Xem thực đơn ${storeName}`,
     openGraph: {
-      title: `Menu | LocalStore`,
-      description: 'Xem thực đơn nhà hàng',
+      title: storeName,
+      description: `Xem thực đơn ${storeName}`,
       type: 'website',
     },
     // Prevent indexing of dynamic tenant pages for now
