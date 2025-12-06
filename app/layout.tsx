@@ -4,6 +4,11 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'LocalStore Menu',
   description: 'Fast, mobile-first restaurant menus for Vietnamese small businesses',
+  // Favicon - shows in browser tab
+  icons: {
+    icon: '/icons/icon-192.svg',
+    apple: '/icons/icon-192.svg',
+  },
   // PWA-ready metadata
   manifest: '/manifest.json',
   appleWebApp: {
