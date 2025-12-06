@@ -8,6 +8,7 @@
  * Client component that handles menu display with category navigation
  * and intersection observer for active category tracking.
  * Optimized for mobile with lazy loading and reduced re-renders.
+ * Uses types from @localstore/contracts via lib/types/menu.ts
  */
 
 import { useState, useEffect, useRef, useCallback } from 'react';
@@ -19,14 +20,14 @@ import {
   MenuNotFound,
 } from '@/components/menu';
 import { fetchMenuWithRetry, MenuApiError } from '@/lib/api/menu-client';
-import type { PublicMenuResponse } from '@/lib/types/menu';
+import type { MenuData } from '@/lib/types/menu';
 
 interface MenuContentProps {
   tenantId: string;
 }
 
 export function MenuContent({ tenantId }: MenuContentProps) {
-  const [menuData, setMenuData] = useState<PublicMenuResponse | null>(null);
+  const [menuData, setMenuData] = useState<MenuData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [notFound, setNotFound] = useState(false);
@@ -161,51 +162,22 @@ export function MenuContent({ tenantId }: MenuContentProps) {
     <div className="min-h-screen bg-gray-50">
       {/* Store Header */}
       <header className="bg-white px-4 py-6 shadow-sm">
-        <h1 className="text-xl font-bold text-gray-900">{store.businessName}</h1>
-        {store.address && (
-          <p className="mt-1 text-sm text-gray-600 flex items-center gap-1">
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-              />
-            </svg>
-            {store.address}
-          </p>
-        )}
-        {store.phone && (
-          <p className="mt-1 text-sm text-gray-600 flex items-center gap-1">
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-              />
-            </svg>
-            <a href={`tel:${store.phone}`} className="hover:text-primary-600">
-              {store.phone}
-            </a>
-          </p>
-        )}
+        <div className="flex items-center gap-3">
+          {/* Store logo */}
+          {store.logoUrl && (
+            <img
+              src={store.logoUrl}
+              alt={store.name}
+              className="w-12 h-12 rounded-lg object-cover"
+            />
+          )}
+          <div>
+            <h1 className="text-xl font-bold text-gray-900">{store.name}</h1>
+            {store.businessType && (
+              <p className="text-sm text-gray-500">{store.businessType}</p>
+            )}
+          </div>
+        </div>
       </header>
 
       {/* Category Navigation */}
