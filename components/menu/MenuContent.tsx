@@ -3,9 +3,11 @@
 /**
  * MenuContent Client Component
  * Story 1.1: Menu Display Page + Story 3.1: API Integration
+ * Story 4.1: Mobile Optimization
  *
  * Client component that handles menu display with category navigation
- * and intersection observer for active category tracking
+ * and intersection observer for active category tracking.
+ * Optimized for mobile with lazy loading and reduced re-renders.
  */
 
 import { useState, useEffect, useRef, useCallback } from 'react';
@@ -68,21 +70,29 @@ export function MenuContent({ tenantId }: MenuContentProps) {
   }, [loadMenu]);
 
   // Set up intersection observer for active category tracking
+  // Debounced to reduce re-renders on scroll
   useEffect(() => {
     if (!menuData) return;
 
+    let timeoutId: NodeJS.Timeout | null = null;
+    
     const observer = new IntersectionObserver(
       (entries) => {
-        // Find the first visible category
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            const categoryId = entry.target.getAttribute('data-category-id');
-            if (categoryId) {
-              setActiveCategory(categoryId);
-              break;
+        // Debounce the active category update
+        if (timeoutId) clearTimeout(timeoutId);
+        
+        timeoutId = setTimeout(() => {
+          // Find the first visible category
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              const categoryId = entry.target.getAttribute('data-category-id');
+              if (categoryId) {
+                setActiveCategory(categoryId);
+                break;
+              }
             }
           }
-        }
+        }, 100); // 100ms debounce
       },
       {
         rootMargin: '-100px 0px -70% 0px',
@@ -95,7 +105,10 @@ export function MenuContent({ tenantId }: MenuContentProps) {
       observer.observe(element);
     });
 
-    return () => observer.disconnect();
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      observer.disconnect();
+    };
   }, [menuData]);
 
   // Handle category click - scroll to section
