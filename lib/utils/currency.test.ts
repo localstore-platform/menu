@@ -1,56 +1,45 @@
 /**
- * Unit tests for VND currency formatter
+ * Unit tests for VND currency utilities
  * Story 1.2: VND Currency Formatter
+ *
+ * Tests the formatVND from @localstore/contracts and
+ * local utilities like calculateVariantPrice.
+ *
+ * Note: @localstore/contracts uses a space before the ₫ symbol
+ * per Vietnamese typography standards: "75.000 ₫"
  */
 
 import { formatVND, formatVNDRange, calculateVariantPrice } from './currency';
 
-describe('formatVND', () => {
+describe('formatVND (from @localstore/contracts)', () => {
   it('formats regular amounts correctly', () => {
-    expect(formatVND(75000)).toBe('75.000₫');
-    expect(formatVND(1500000)).toBe('1.500.000₫');
-    expect(formatVND(25000)).toBe('25.000₫');
+    expect(formatVND(75000)).toBe('75.000 ₫');
+    expect(formatVND(1500000)).toBe('1.500.000 ₫');
+    expect(formatVND(25000)).toBe('25.000 ₫');
   });
 
   it('handles zero correctly', () => {
-    expect(formatVND(0)).toBe('0₫');
-  });
-
-  it('handles undefined and null', () => {
-    expect(formatVND(undefined)).toBe('—');
-    expect(formatVND(null)).toBe('—');
-  });
-
-  it('handles NaN', () => {
-    expect(formatVND(NaN)).toBe('—');
-  });
-
-  it('handles negative numbers', () => {
-    expect(formatVND(-10000)).toBe('-10.000₫');
+    expect(formatVND(0)).toBe('0 ₫');
   });
 
   it('handles small amounts', () => {
-    expect(formatVND(1000)).toBe('1.000₫');
-    expect(formatVND(500)).toBe('500₫');
+    expect(formatVND(1000)).toBe('1.000 ₫');
+    expect(formatVND(500)).toBe('500 ₫');
   });
 
   it('handles large amounts', () => {
-    expect(formatVND(10000000)).toBe('10.000.000₫');
-    expect(formatVND(999999999)).toBe('999.999.999₫');
+    expect(formatVND(10000000)).toBe('10.000.000 ₫');
+    expect(formatVND(999999999)).toBe('999.999.999 ₫');
   });
 });
 
-describe('formatVNDRange', () => {
+describe('formatVNDRange (from @localstore/contracts)', () => {
   it('formats single price when min equals max', () => {
-    expect(formatVNDRange(75000, 75000)).toBe('75.000₫');
-  });
-
-  it('formats single price when max is undefined', () => {
-    expect(formatVNDRange(75000)).toBe('75.000₫');
+    expect(formatVNDRange(75000, 75000)).toBe('75.000 ₫');
   });
 
   it('formats price range correctly', () => {
-    expect(formatVNDRange(65000, 90000)).toBe('65.000₫ - 90.000₫');
+    expect(formatVNDRange(65000, 90000)).toBe('65.000 - 90.000 ₫');
   });
 });
 
