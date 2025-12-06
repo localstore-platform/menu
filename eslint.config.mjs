@@ -8,6 +8,15 @@ export default [
   {
     ignores: ['node_modules/**', '.next/**', 'out/**'],
   },
+  // Service Worker (uses browser globals + self)
+  {
+    files: ['public/sw.js'],
+    languageOptions: {
+      globals: {
+        ...globals.serviceworker,
+      },
+    },
+  },
   // Node.js config files
   {
     files: ['*.js', '*.mjs'],
