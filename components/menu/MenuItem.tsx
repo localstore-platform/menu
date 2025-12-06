@@ -37,12 +37,12 @@ export function MenuItem({ item }: MenuItemProps) {
 
   return (
     <article
-      className={`flex gap-3 p-3 rounded-lg border border-gray-100 bg-white shadow-sm transition-shadow hover:shadow-md ${
+      className={`flex gap-3 p-3 rounded-lg border border-gray-100 bg-white shadow-sm transition-shadow hover:shadow-md active:scale-[0.99] min-h-[72px] ${
         !item.isAvailable ? 'opacity-60' : ''
       }`}
     >
-      {/* Image placeholder or actual image */}
-      <div className="shrink-0 w-20 h-20 rounded-lg bg-gray-100 overflow-hidden">
+      {/* Image placeholder or actual image - smaller on 320px screens */}
+      <div className="shrink-0 w-16 h-16 xs:w-20 xs:h-20 rounded-lg bg-gray-100 overflow-hidden">
         {item.thumbnailUrl ? (
           <img
             src={item.thumbnailUrl}
