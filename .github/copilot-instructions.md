@@ -2,6 +2,28 @@
 
 This extends the global instructions from the [specs repository](https://github.com/localstore-platform/specs/blob/v1.1-specs/.github/copilot-instructions.md).
 
+---
+
+## ⚠️ CRITICAL RULES (Read First!)
+
+**Before ANY git commit, you MUST:**
+
+1. **Split changes into logical commits** - One commit = One feature/fix
+2. **If you need "and" to describe the commit, SPLIT IT**
+3. **Never commit all changes in one big commit**
+4. **Follow branch naming:** `<type>/<short-description>`
+5. **Never commit directly to main**
+
+Example of BAD vs GOOD:
+- ❌ `feat: add menu display, Docker setup, and mobile testing`
+- ✅ Split into:
+  - `feat: add menu display page with category navigation`
+  - `feat: add VND currency formatter with unit tests`
+  - `feat: add Docker development configuration`
+  - `feat: add mobile testing support`
+
+---
+
 ## Repository Context
 
 - **Repository:** menu
