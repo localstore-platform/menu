@@ -4,12 +4,25 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'LocalStore Menu',
   description: 'Fast, mobile-first restaurant menus for Vietnamese small businesses',
+  // PWA-ready metadata
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'LocalStore Menu',
+  },
+  formatDetection: {
+    telephone: true,
+  },
 };
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
   themeColor: '#FF6B35',
+  viewportFit: 'cover', // Support for notched phones
 };
 
 export default function RootLayout({
@@ -19,7 +32,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="vi">
-      <body>{children}</body>
+      <body className="safe-area-inset-top safe-area-inset-bottom" suppressHydrationWarning>
+        {children}
+      </body>
     </html>
   );
 }
