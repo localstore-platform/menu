@@ -14,7 +14,7 @@
 | 1.2 | VND Currency Formatter | ✅ Done | 13 unit tests passing |
 | 3.1 | API Integration | ✅ Done | Connected to localhost:8080 |
 | 4.1 | Mobile Optimization | ✅ Done | PWA support, 320px screens, touch targets |
-| 4.2 | Demo Deployment (Vercel) | 🔴 Not Started | |
+| 4.2 | Demo Deployment (Vercel) | ⏸️ Blocked | Waiting for API infra deployment |
 
 **Status Legend:** 🔴 Not Started | 🟡 In Progress | ✅ Done | ⏸️ Blocked
 
@@ -34,9 +34,14 @@
 
 ## Current Focus
 
-**Next Task:** Story 4.2 - Demo Deployment (Vercel)
+**Next Task:** Story 4.2 - Demo Deployment (Vercel) ⏸️ BLOCKED
 
-**Requirements:**
+**Waiting for:**
+
+- API infrastructure deployment (api repo)
+- Production API URL
+
+**Once unblocked:**
 
 - Deploy to Vercel with static export
 - Configure production API URL
@@ -122,7 +127,11 @@ eslint.config.mjs           # ESLint 9 flat config
 
 ## Blockers
 
-None currently.
+**Story 4.2 - Vercel Deployment:**
+
+- ⏸️ Waiting for API infrastructure deployment
+- Need production API URL before deploying menu to Vercel
+- Dependency: `api` repo must deploy first to provide data endpoint
 
 ---
 
