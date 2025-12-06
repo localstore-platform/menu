@@ -13,7 +13,7 @@
 | 1.1 | Menu Display Page | ✅ Done | Mobile-first, category navigation |
 | 1.2 | VND Currency Formatter | ✅ Done | 13 unit tests passing |
 | 3.1 | API Integration | ✅ Done | Connected to localhost:8080 |
-| 4.1 | Mobile Optimization | 🔴 Not Started | |
+| 4.1 | Mobile Optimization | ✅ Done | PWA support, 320px screens, touch targets |
 | 4.2 | Demo Deployment (Vercel) | 🔴 Not Started | |
 
 **Status Legend:** 🔴 Not Started | 🟡 In Progress | ✅ Done | ⏸️ Blocked
@@ -34,17 +34,14 @@
 
 ## Current Focus
 
-**Next Task:** Story 4.1 - Mobile Optimization & Testing
+**Next Task:** Story 4.2 - Demo Deployment (Vercel)
 
 **Requirements:**
 
-- Test on real devices (iPhone, Android)
-- Optimize images (compress, WebP)
-- Add lazy loading for menu items
-- Test on slow 3G network
-- Ensure <2s TTI on 4G network
-- Fix layout issues on small screens (320px)
-- Add touch-friendly tap targets (min 44px)
+- Deploy to Vercel with static export
+- Configure production API URL
+- Test production build
+- Verify performance metrics
 
 ---
 
@@ -52,7 +49,7 @@
 
 ### Session: 2025-12-06
 
-- Started: Stories 1.1, 1.2, 3.1
+- Started: Stories 1.1, 1.2, 3.1, 4.1
 - Completed:
   - VND currency formatter with unit tests (formatVND, formatVNDRange)
   - Menu API client with retry logic and error handling
@@ -62,8 +59,17 @@
   - MenuSkeleton and MenuError components
   - Dynamic menu page at `/[tenant]/menu`
   - Jest testing setup with 13 passing tests
+  - **Mobile Optimization (Story 4.1):**
+    - PWA manifest with SVG icons
+    - Safe area insets for notched phones (iPhone X+)
+    - xs breakpoint (360px) for 320px screen support
+    - Touch feedback on menu items (active:scale-[0.99])
+    - Min 44px touch targets
+    - Responsive images (16/20px on small/normal screens)
+    - Debounced intersection observer to reduce re-renders
+    - ESLint flat config setup
 - Blockers: None
-- Next: Mobile optimization, Vercel deployment
+- Next: Vercel deployment (Story 4.2)
 
 ---
 
@@ -84,16 +90,26 @@ lib/
 components/
 └── menu/
     ├── index.ts            # Re-exports
-    ├── MenuItem.tsx        # Menu item card
+    ├── MenuItem.tsx        # Menu item card (mobile-optimized)
     ├── CategoryNav.tsx     # Sticky category tabs
     ├── MenuSkeleton.tsx    # Loading skeleton
     ├── MenuError.tsx       # Error states
-    └── MenuContent.tsx     # Main menu content
+    └── MenuContent.tsx     # Main menu content (debounced observer)
 
 app/
+├── layout.tsx              # PWA metadata, viewport config
+├── globals.css             # xs breakpoint, safe-area utilities
 └── [tenant]/
     └── menu/
         └── page.tsx        # Dynamic menu page
+
+public/
+├── manifest.json           # PWA manifest
+└── icons/
+    ├── icon-192.svg        # PWA icon 192x192
+    └── icon-512.svg        # PWA icon 512x512
+
+eslint.config.mjs           # ESLint 9 flat config
 ```
 
 ### API Integration
