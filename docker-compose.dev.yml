@@ -1,0 +1,35 @@
+# Docker Compose Override for Development
+# Usage: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+#
+# This file extends docker-compose.yml with development-specific settings:
+# - Hot reloading with volume mounts
+# - Development API URL (localhost:8080)
+# - Source code mounting for live updates
+
+services:
+  menu:
+    build:
+      target: development
+      args:
+        # Use HOST_IP env var or fallback to localhost
+        - NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8080}
+    environment:
+      - NODE_ENV=development
+      # Set HOST_IP in terminal before running: export HOST_IP=$(ipconfig getifaddr en0)
+      # Then use: NEXT_PUBLIC_API_BASE_URL=http://$HOST_IP:8080 pnpm docker:dev
+      - NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8080}
+      - HOST_IP=${HOST_IP:-}
+    volumes:
+      # Mount source code for hot reloading
+      - .:/app:delegated
+      # Preserve node_modules from container (prevents conflicts)
+      - /app/node_modules
+      - /app/.next
+    # Enable access to host machine's localhost from container
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+    deploy: {}  # Clear resource limits for development
+    # Override command for development with turbopack
+    # Use -H 0.0.0.0 to allow access from other devices on the same network
+    command: pnpm dev --turbopack -H 0.0.0.0

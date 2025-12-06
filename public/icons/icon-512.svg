@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- LocalStore Menu Icon - 512x512 -->
+  <rect width="512" height="512" rx="64" fill="#FF6B35"/>
+  
+  <!-- Menu lines icon -->
+  <g fill="white">
+    <!-- Line 1 -->
+    <rect x="128" y="149" width="256" height="32" rx="16"/>
+    <!-- Line 2 -->
+    <rect x="128" y="240" width="192" height="32" rx="16"/>
+    <!-- Line 3 -->
+    <rect x="128" y="331" width="224" height="32" rx="16"/>
+  </g>
+  
+  <!-- Dot accents -->
+  <circle cx="416" cy="256" r="21" fill="white" opacity="0.8"/>
+  <circle cx="384" cy="347" r="16" fill="white" opacity="0.6"/>
+</svg>

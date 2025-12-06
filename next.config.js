@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  // Use standalone output for Docker production builds
+  // This creates a minimal production bundle with all dependencies
+  output: 'standalone',
+
+  // Allow dev access from any local network IP (mobile testing)
+  // Format: hostname only (not full URL), supports wildcards
+  allowedDevOrigins: ['192.168.*.*'],
   
   // Environment
   env: {
@@ -14,6 +20,10 @@ const nextConfig = {
       {
         protocol: 'http',
         hostname: 'localhost',
+      },
+      {
+        protocol: 'http',
+        hostname: 'api',
       },
       {
         protocol: 'https',
