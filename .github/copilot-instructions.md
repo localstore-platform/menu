@@ -61,7 +61,22 @@ After implementation, **update `docs/CURRENT_WORK.md`**:
 3. Run `npm run lint && npm run test`
 4. Create PR when story is complete
 
-### Step 7: Report
+### Step 7: Post Event to Slack
+
+After completing a story, post an event to `#agent-events` (channel ID: `C0A1VSFQ9SS`):
+
+```
+✅ STORY_DONE from menu: [Story Title]
+---
+Details: [What UI/features were implemented]
+Affected: [api, specs]
+Action: [Any API needs or spec updates required]
+Spec: [Link to relevant spec section]
+```
+
+Use `slack_post_message` with channel_id `C0A1VSFQ9SS`.
+
+### Step 8: Report
 
 Tell the user:
 
@@ -69,6 +84,19 @@ Tell the user:
 - What was implemented
 - Current status
 - What's next
+- Event posted to Slack
+
+---
+
+## 🔄 "Sync Events" Trigger
+
+When the user says **"sync events"**, **"check events"**, or **"đồng bộ"**:
+
+1. **Read recent messages** from `#agent-events` (channel ID: `C0A1VSFQ9SS`) using `slack_get_channel_history`
+2. **Filter for events affecting this repo** (look for "menu" in Affected field)
+3. **Report relevant events** to user with recommended actions
+4. **If API_READY from api** → integrate new endpoints
+5. **If SCHEMA_UPDATED from contracts** → update type imports
 
 ---
 
