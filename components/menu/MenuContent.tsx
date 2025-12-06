@@ -35,6 +35,9 @@ export function MenuContent({ tenantId }: MenuContentProps) {
 
   // Refs for category sections
   const categoryRefs = useRef<Map<string, HTMLElement>>(new Map());
+  
+  // Flag to temporarily disable intersection observer during programmatic scroll
+  const isScrollingRef = useRef(false);
 
   // Fetch menu data
   const loadMenu = useCallback(async () => {
@@ -79,10 +82,16 @@ export function MenuContent({ tenantId }: MenuContentProps) {
     
     const observer = new IntersectionObserver(
       (entries) => {
+        // Skip if we're in the middle of a programmatic scroll
+        if (isScrollingRef.current) return;
+        
         // Debounce the active category update
         if (timeoutId) clearTimeout(timeoutId);
         
         timeoutId = setTimeout(() => {
+          // Skip again in case scrolling started during debounce
+          if (isScrollingRef.current) return;
+          
           // Find the first visible category
           for (const entry of entries) {
             if (entry.isIntersecting) {
@@ -116,6 +125,12 @@ export function MenuContent({ tenantId }: MenuContentProps) {
   const handleCategoryClick = (categoryId: string) => {
     const element = categoryRefs.current.get(categoryId);
     if (element) {
+      // Immediately set the active category for instant feedback
+      setActiveCategory(categoryId);
+      
+      // Disable intersection observer during scroll animation
+      isScrollingRef.current = true;
+      
       const headerOffset = 120; // Account for sticky header
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.scrollY - headerOffset;
@@ -124,6 +139,12 @@ export function MenuContent({ tenantId }: MenuContentProps) {
         top: offsetPosition,
         behavior: 'smooth',
       });
+      
+      // Re-enable intersection observer after scroll animation completes
+      // Using 500ms as smooth scroll typically takes ~300-400ms
+      setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 500);
     }
   };
 
