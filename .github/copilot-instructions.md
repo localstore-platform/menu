@@ -187,10 +187,53 @@ lib/
 
 **CRITICAL:** Follow `docs/GIT_WORKFLOW.md`:
 
-- Never commit directly to main branch
-- Branch naming: `feat/<story-description>` (e.g., `feat/menu-display-page`)
-- Use conventional commit messages
-- Create PR after commits
+### Never Commit Directly to Main
+
+- **Always** create a new branch for changes
+- If currently on `main`, checkout to a new branch before committing
+- Branch naming: `<type>/<short-description>`
+
+### Branch Naming Types
+
+| Type | Description |
+|------|-------------|
+| `feat` | New feature |
+| `fix` | Bug fix |
+| `chore` | Maintenance, dependencies, tooling |
+| `docs` | Documentation only |
+| `refactor` | Code refactoring |
+| `test` | Adding or updating tests |
+
+### Logical Commits
+
+- Group related changes into logical commits
+- Each commit should represent a single logical change
+- Use conventional commit format:
+
+```text
+<type>: <short description>
+
+- Detail 1
+- Detail 2
+```
+
+### Commit Granularity Principle
+
+Each commit should answer ONE question: "What single feature/fix does this add?"
+
+**Rule of thumb:** If you need "and" to describe the commit, split it.
+
+- ❌ `Add docs and config files` → Split
+- ✅ `Add GitHub PR template and CODEOWNERS` → OK (same purpose: GitHub config)
+
+### Pull Request Workflow
+
+After committing:
+
+1. Push the branch to origin
+2. Create a PR to `main` branch
+3. If PR already exists, update the title and description
+4. **Do not wait for confirmation** - push and create PR automatically
 
 ---
 
