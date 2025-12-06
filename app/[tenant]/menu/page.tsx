@@ -21,7 +21,7 @@ interface MenuPageProps {
 export async function generateMetadata({
   params,
 }: MenuPageProps): Promise<Metadata> {
-  const { tenant } = await params;
+  const { tenant: _tenant } = await params;
 
   return {
     title: `Menu | LocalStore`,
